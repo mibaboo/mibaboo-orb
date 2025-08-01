@@ -1,8 +1,20 @@
 version: 2.1
 
 description: >
-  Build and push Docker images to ECR
-  Simplify the image builging workflow with sensible defaults.
+  A comprehensive CircleCI orb for building and pushing Docker images to Amazon ECR (Elastic Container Registry).
+  This orb simplifies the container image building workflow with sensible defaults and extensive customization options.
+  
+  Key Features:
+  - Automated ECR authentication and login
+  - Multi-platform Docker image building (AMD64, ARM64)
+  - Support for both private and public ECR registries
+  - Docker layer caching for faster builds
+  - Repository lifecycle policies and security scanning
+  - Workspace and remote Docker environment support
+  - Comprehensive error handling and timeout management
+  
+  The orb integrates seamlessly with AWS CLI authentication methods including OIDC and static credentials,
+  making it suitable for both development and production environments.
 
 # This information will be displayed in the orb registry and is not mandatory.
 display:
@@ -10,15 +22,7 @@ display:
   source_url: "https://github.com/mibaboo/mibaboo-orb"
 
 # If your orb requires other orbs, you can import them like this. Otherwise remove the "orbs" stanza.
- orbs:
+orbs:
   aws-cli: circleci/aws-cli@5.4.0
   aws-ecr: circleci/aws-ecr@9.5.2
-
-
- jobs:
-   build_and_push:
-     description: >
-       Log into Amazon ECR and push image to repository.
-       Authentication with OIDC or static AWS keys using the aws-cli/setup command is required.
-       NOTE: Some commands may not work with AWS CLI Version 1.  
-
+  
