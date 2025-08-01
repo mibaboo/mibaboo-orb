@@ -62,10 +62,10 @@ parameters:
       to the working directory. Defaults to '.' (the working directory)
   setup_remote_docker:
     type: boolean
-    default: false
+    default: true
     description: >
       Setup and use CircleCI's remote Docker environment for Docker and
-      docker-compose commands? Not required if using the default executor
+      docker-compose commands. Required when using Docker executor.
   remote_docker_version:
     type: string
     default: ""

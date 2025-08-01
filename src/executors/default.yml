@@ -1,14 +1,14 @@
 description: >
-  Ubuntu-based machine executor VM for Docker builds and deployments.
-  Provides Docker engine and necessary tools for container operations.
-  https://circleci.com/docs/2.0/executor-types/#using-machine
+  Docker executor with Docker-in-Docker support for building and pushing container images.
+  Compatible with CircleCI's free plan and provides all necessary tools for container operations.
+  https://circleci.com/docs/2.0/executor-types/#using-docker
 parameters:
   image:
     type: string
-    default: ubuntu-2204:current
+    default: cimg/base:2024.01
     description: >
-      Ubuntu machine image to use:
-      https://circleci.com/docs/2.0/configuration-reference/#available-linux-machine-images
+      Docker image to use for the executor.
+      Recommended: cimg/base:2024.01 or cimg/node:18.19
   docker_layer_caching:
     type: boolean
     default: false
@@ -18,9 +18,10 @@ parameters:
     type: string
     default: small
     description: >
-      Resource class for the machine executor (small, medium, large, xlarge, 2xlarge).
+      Resource class for the Docker executor (small, medium, large, xlarge, 2xlarge).
 
-machine:
-  image: <<parameters.image>>
-  docker_layer_caching: <<parameters.docker_layer_caching>>
-resource_class: <<parameters.resource_class>>
+docker:
+  - image: <<parameters.image>>
+    environment:
+      DOCKER_BUILDKIT: 1
+      COMPOSE_DOCKER_CLI_BUILD: 1
