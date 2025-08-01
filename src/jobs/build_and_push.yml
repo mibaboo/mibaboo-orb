@@ -105,12 +105,10 @@ parameters:
     default:
       - run:
           name: Container Registry Login Error
-          command: >-
-            echo "Error - container_registry_login parameter is set to true without
-             any registry_login steps."
+          command: <<include(scripts/registry_login_error.sh)>>
       - run:
           name: Exit on Registry Login Error
-          command: exit 1
+          command: <<include(scripts/exit_on_error.sh)>>
 
   dockerfile:
     type: string
