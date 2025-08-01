@@ -1,13 +1,32 @@
 description: >
-  Sample example description.
-# Provide a use-case based example for using this orb.
-# Everything in the `usage` section will be displayed in the orb registry.
-# Comments are not retained.
+  Simple example of building and pushing a Docker image to Amazon ECR using OIDC authentication.
+
 usage:
   version: 2.1
+
   orbs:
-    <orb-name>: <namespace>/<orb-name>@1.2.3
+    build-image: bash/build-image@dev:0.0.3
+    aws-cli: circleci/aws-cli@5.1
+
   workflows:
-    use-my-orb:
+    build_and_push:
       jobs:
-        - <orb-name>/<job-name>
+        - build-image/build_and_push:
+            # CircleCI context containing AWS credentials
+            context: aws-shared
+            # Name of your ECR repository
+            repo: my-app
+            # Docker image tag (defaults to branch-short_commit_sha)
+            tag: ${CIRCLE_SHA1}
+            # Name of Dockerfile to use (defaults to Dockerfile)
+            dockerfile: Dockerfile
+            # Path to directory containing your Dockerfile
+            path: ./docker
+            # Extra flags to pass to docker build command
+            extra_build_args: "--compress --build-arg NODE_ENV=production"
+            # Platform target for the docker image (defaults to linux/amd64)
+            platform: linux/amd64
+            # AWS region of ECR repository
+            region: us-west-2
+            # Your AWS account ID
+            account_id: ${AWS_ACCOUNT_ID}

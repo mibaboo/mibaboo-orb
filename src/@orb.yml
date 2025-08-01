@@ -1,10 +1,8 @@
 version: 2.1
 
 description: >
-  This is a test orb
-  What will your orb allow users to accomplish? we can test this
-  Descriptions should be short, simple, and informative.
-  Hello
+  Build and push Docker images to ECR
+  Simplify the image builging workflow with sensible defaults.
 
 # This information will be displayed in the orb registry and is not mandatory.
 display:
@@ -12,5 +10,15 @@ display:
   source_url: "https://github.com/mibaboo/mibaboo-orb"
 
 # If your orb requires other orbs, you can import them like this. Otherwise remove the "orbs" stanza.
-# orbs:
-#  hello: circleci/hello-build@0.0.5
+ orbs:
+  aws-cli: circleci/aws-cli@5.4.0
+  aws-ecr: circleci/aws-ecr@9.5.2
+
+
+ jobs:
+   build_and_push:
+     description: >
+       Log into Amazon ECR and push image to repository.
+       Authentication with OIDC or static AWS keys using the aws-cli/setup command is required.
+       NOTE: Some commands may not work with AWS CLI Version 1.  
+
